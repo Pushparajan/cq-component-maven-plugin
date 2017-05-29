@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jcr:root fileName="_cq_dialog.xml" xmlns:jcr="http://www.jcp.org/jcr/1.0" jcr:primaryType="nt:unstructured" jcr:title="NewModelWithExporter" mode="edit" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" sling:resourceType="cq/gui/components/authoring/dialog">
+  <content jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/foundation/container">
+    <layout jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/foundation/layouts/tabs"/>
+    <items jcr:primaryType="nt:unstructured">
+      <NewModelWithExporter xmlns:cq="http://www.day.com/jcr/cq/1.0" cq:hideOnEdit="{Boolean}false" cq:showOnCreate="{Boolean}false" jcr:primaryType="nt:unstructured" jcr:title="NewModelWithExporter" sling:resourceType="granite/ui/components/foundation/section">
+        <layout jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/foundation/layouts/fixedcolumns"/>
+        <items jcr:primaryType="nt:unstructured">
+          <column jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/foundation/container">
+            <items jcr:primaryType="nt:unstructured">
+              <title cq:hideOnEdit="{Boolean}false" cq:showOnCreate="{Boolean}true" disabled="{Boolean}false" fieldLabel="Title" jcr:primaryType="nt:unstructured" name="./title" renderReadOnly="{Boolean}true" required="{Boolean}false" sling:resourceType="granite/ui/components/foundation/form/textfield"/>
+              <pageTitle cq:hideOnEdit="{Boolean}false" cq:showOnCreate="{Boolean}true" disabled="{Boolean}false" fieldLabel="pageTitle" jcr:primaryType="nt:unstructured" name="./pageTitle" renderReadOnly="{Boolean}true" required="{Boolean}false" sling:resourceType="granite/ui/components/foundation/form/textfield"/>
+              <navTitle cq:hideOnEdit="{Boolean}false" cq:showOnCreate="{Boolean}true" disabled="{Boolean}false" fieldLabel="OptionalTitle" jcr:primaryType="nt:unstructured" name="./navTitle" renderReadOnly="{Boolean}true" required="{Boolean}false" sling:resourceType="granite/ui/components/foundation/form/textfield"/>
+            </items>
+          </column>
+        </items>
+      </NewModelWithExporter>
+    </items>
+  </content>
+</jcr:root>

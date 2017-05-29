@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jcr:root activeTab="0" allowBlank="{Boolean}false" disabled="{Boolean}false" fileName="dialog.xml" hideLabel="{Boolean}false" xmlns:jcr="http://www.jcp.org/jcr/1.0" jcr:primaryType="cq:Dialog" title="NewModelWithExporter" xtype="dialog">
+  <items jcr:primaryType="cq:WidgetCollection">
+    <tabs jcr:primaryType="cq:TabPanel">
+      <items jcr:primaryType="cq:WidgetCollection">
+        <NewModelWithExporter jcr:primaryType="cq:Widget" title="NewModelWithExporter">
+          <items jcr:primaryType="cq:WidgetCollection">
+            <title allowBlank="{Boolean}true" disabled="{Boolean}false" fieldLabel="Title" hideLabel="{Boolean}false" jcr:primaryType="cq:Widget" name="./title" xtype="textfield"/>
+            <pageTitle allowBlank="{Boolean}true" disabled="{Boolean}false" fieldLabel="pageTitle" hideLabel="{Boolean}false" jcr:primaryType="cq:Widget" name="./pageTitle" xtype="textfield"/>
+            <navTitle allowBlank="{Boolean}true" disabled="{Boolean}false" fieldLabel="OptionalTitle" hideLabel="{Boolean}false" jcr:primaryType="cq:Widget" name="./navTitle" xtype="textfield"/>
+          </items>
+        </NewModelWithExporter>
+      </items>
+    </tabs>
+  </items>
+</jcr:root>

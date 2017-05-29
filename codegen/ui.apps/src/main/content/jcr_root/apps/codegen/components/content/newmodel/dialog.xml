@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jcr:root activeTab="0" allowBlank="{Boolean}false" disabled="{Boolean}false" fileName="dialog.xml" hideLabel="{Boolean}false" xmlns:jcr="http://www.jcp.org/jcr/1.0" jcr:primaryType="cq:Dialog" title="NewModel" xtype="dialog">
+  <items jcr:primaryType="cq:WidgetCollection">
+    <tabs jcr:primaryType="cq:TabPanel">
+      <items jcr:primaryType="cq:WidgetCollection">
+        <NewModel jcr:primaryType="cq:Widget" title="NewModel">
+          <items jcr:primaryType="cq:WidgetCollection">
+            <message allowBlank="{Boolean}true" disabled="{Boolean}false" fieldLabel="Text" hideLabel="{Boolean}false" jcr:primaryType="cq:Widget" name="./message" xtype="textarea"/>
+          </items>
+        </NewModel>
+      </items>
+    </tabs>
+  </items>
+</jcr:root>

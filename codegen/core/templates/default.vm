@@ -1,0 +1,24 @@
+<!--/*
+    Copyright SR_
+*/-->
+#set ( $d = "$")
+
+<pre data-sly-use.$modelname.toLowerCase()="$packagename.$modelname">
+$modelname says:
+<br>
+
+<ul>
+#foreach( $attribute in $attributes )
+    <li>${d}{$modelname.toLowerCase().$attribute}</li>
+#end
+</ul>
+
+<ul>
+#foreach( $attribute in $attributes )
+    <li>${d}{properties.$attribute}</li>
+#end
+</ul>
+
+
+
+</pre>
