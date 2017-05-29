@@ -73,6 +73,7 @@ import com.citytechinc.cq.component.editconfig.InPlaceEditorElement;
 import com.citytechinc.cq.component.editconfig.maker.InPlaceEditorMaker;
 import com.citytechinc.cq.component.editconfig.registry.InPlaceEditorRegistry;
 import com.citytechinc.cq.component.editconfig.util.EditConfigUtil;
+import com.citytechinc.cq.component.htl.util.HtlUtil;
 import com.citytechinc.cq.component.touchuidialog.TouchUIDialogElement;
 import com.citytechinc.cq.component.touchuidialog.exceptions.TouchUIDialogGenerationException;
 import com.citytechinc.cq.component.touchuidialog.exceptions.TouchUIDialogWriteException;
@@ -204,6 +205,7 @@ public class ComponentMojoUtil {
 		TouchUIDialogGenerationException {
 
 		if (!existingArchiveFile.exists()) {
+			getLog().debug("name of the file " + existingArchiveFile.getPath() + existingArchiveFile.toURL().toString());
 			throw new OutputFailureException("Archive file does not exist");
 		}
 
@@ -244,6 +246,12 @@ public class ComponentMojoUtil {
 		 * Create content.xml within temp archive
 		 */
 		ContentUtil.buildContentFromClassList(classList, tempOutputStream, existingArchiveEntryNames, buildDirectory,
+			componentPathBase, defaultComponentPathSuffix, defaultComponentGroup, transformer);
+
+		/*
+		 * Create html file within temp archive
+		 */
+		HtlUtil.buildHtlFromClassList(classList, tempOutputStream, existingArchiveEntryNames, buildDirectory,
 			componentPathBase, defaultComponentPathSuffix, defaultComponentGroup, transformer);
 
 		/*
@@ -322,16 +330,26 @@ public class ComponentMojoUtil {
 	 * @return The determined output directory
 	 * @throws OutputFailureException
 	 * @throws ClassNotFoundException
+	 * @throws IOException 
 	 */
 	public static File getOutputDirectoryForComponentClass(ComponentNameTransformer transformer,
 		CtClass componentClass, File buildDirectory, String componentPathBase, String defaultComponentPathSuffix)
-		throws OutputFailureException, ClassNotFoundException {
+		throws OutputFailureException, ClassNotFoundException, IOException {
 
+
+		String outputPath = buildDirectory.getParentFile().getParentFile().getCanonicalPath() + "//ui//apps//src//main//content//"; 
+		File directory = new File(outputPath);
+		
+		if (!directory.exists()) {
+			outputPath = OUTPUT_PATH; // default
+		}
+		
 		String dialogFilePath =
-			OUTPUT_PATH + "/" + getComponentBasePathForComponentClass(componentClass, componentPathBase) + "/"
-				+ getComponentPathSuffixForComponentClass(componentClass, defaultComponentPathSuffix) + "/"
-				+ getComponentNameForComponentClass(transformer, componentClass);
+				outputPath + "/" + getComponentBasePathForComponentClass(componentClass, componentPathBase) + "/"
+					+ getComponentPathSuffixForComponentClass(componentClass, defaultComponentPathSuffix) + "/"
+					+ getComponentNameForComponentClass(transformer, componentClass);
 
+		
 		File componentOutputDirectory = new File(buildDirectory, dialogFilePath);
 
 		if (!componentOutputDirectory.exists()) {
@@ -665,6 +683,48 @@ public class ComponentMojoUtil {
 			ComponentMojoUtil.getLog().debug("Existing file found at " + editConfigFilePath);
 		}
 	}
+	
+	/**
+	 * Determines the name of the edit file to be written and writes the the
+	 * file which the provided EditConfig object represents to that determined
+	 * file.
+	 * 
+	 * @param htmlContent
+	 * @param componentClass
+	 * @return The file written
+	 * @throws TransformerException
+	 * @throws ParserConfigurationException
+	 * @throws IOException
+	 * @throws OutputFailureException
+	 * @throws ClassNotFoundException
+	 * @throws NoSuchMethodException
+	 * @throws InvocationTargetException
+	 * @throws IllegalAccessException
+	 * @throws SecurityException
+	 * @throws IllegalArgumentException
+	 */
+	public static File writeElementToFile(ComponentNameTransformer transformer, File htmlContent,
+		CtClass componentClass, File buildDirectory, String componentPathBase, String defaultComponentPathSuffix,
+		String path) throws TransformerException, ParserConfigurationException, IOException, OutputFailureException,
+		ClassNotFoundException, IllegalArgumentException, SecurityException, IllegalAccessException,
+		InvocationTargetException, NoSuchMethodException {
+		
+		File componentOutputDirectory =
+			ComponentMojoUtil.getOutputDirectoryForComponentClass(transformer, componentClass, buildDirectory,
+				componentPathBase, defaultComponentPathSuffix);
+
+		File file = new File(componentOutputDirectory, path);
+
+		if (file.exists()) {
+			file.delete();
+		}
+
+		file.createNewFile();
+		
+		FileUtils.copyFile(htmlContent, file);
+
+		return file;
+	}
 
 	/**
 	 * Determines the name of the edit file to be written and writes the the
@@ -690,6 +750,7 @@ public class ComponentMojoUtil {
 		String path) throws TransformerException, ParserConfigurationException, IOException, OutputFailureException,
 		ClassNotFoundException, IllegalArgumentException, SecurityException, IllegalAccessException,
 		InvocationTargetException, NoSuchMethodException {
+		
 		File componentOutputDirectory =
 			ComponentMojoUtil.getOutputDirectoryForComponentClass(transformer, componentClass, buildDirectory,
 				componentPathBase, defaultComponentPathSuffix);
@@ -697,6 +758,7 @@ public class ComponentMojoUtil {
 		File file = new File(componentOutputDirectory, path);
 
 		if (file.exists()) {
+			ComponentMojoUtil.getLog().debug("removing old file"+file.getAbsolutePath());
 			file.delete();
 		}
 

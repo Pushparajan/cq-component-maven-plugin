@@ -79,6 +79,9 @@ public class ComponentMojo extends AbstractMojo {
 
 	@Parameter(defaultValue = "true")
 	private boolean generateTouchUiDialogs;
+	
+	@Parameter(defaultValue = "true")
+	private boolean generateComponentHTL;
 
 	@Parameter(defaultValue = "true")
 	private boolean generateClassicUiDialogs;
@@ -122,6 +125,8 @@ public class ComponentMojo extends AbstractMojo {
 			if (transformer == null) {
 				throw new ConfigurationException("The configured transformer wasn't found");
 			}
+			
+			getLog().debug(" Archive " + getArchiveFileForProject());
 
 			ComponentMojoUtil.buildArchiveFileForProjectAndClassList(classList, widgetRegistry, touchUIWidgetRegistry,
 				inPlaceEditorRegistry, classLoader, classPool, new File(project.getBuild().getDirectory()),
@@ -198,9 +203,9 @@ public class ComponentMojo extends AbstractMojo {
 	}
 
 	private File getArchiveFileForProject() {
-		File buildDirectory = new File(project.getBuild().getDirectory());
+		File buildDirectory = new File(project.getBuild().getDirectory()).getParentFile();
 
-		getLog().debug("Archive file name configured to be " + packageFileName + PACKAGE_EXTENSION);
+		getLog().debug("Archive file name configured to be " + project.getBuild().getDirectory() + packageFileName + PACKAGE_EXTENSION);
 
 		return new File(buildDirectory, packageFileName + PACKAGE_EXTENSION);
 	}
